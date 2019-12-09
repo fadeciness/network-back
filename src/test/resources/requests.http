@@ -1,0 +1,66 @@
+###
+
+
+GET {{url}}/api/posts
+
+###
+
+POST {{url}}/api/posts
+Content-Type: application/json
+
+{
+  "id": 0,
+  "content": "Last post",
+  "media": null
+}
+
+###
+
+DELETE {{url}}/api/posts/1
+
+###
+
+GET {{url}}/api/posts?q=FIRST
+
+###
+
+DELETE {{url}}/api/posts/hello
+
+###
+
+POST {{url}}/api/files/multipart
+Content-Type: multipart/form-data; boundary=WebApp
+
+--WebApp
+Content-Disposition: form-data; name="file"; filename="panda.jpg"
+Content-Type: image/jpeg
+
+< ./java.jpg
+--WebApp--
+
+###
+
+POST {{url}}/api/files/model
+Content-Type: multipart/form-data; boundary=WebApp
+
+--WebApp
+Content-Disposition: form-data; name="name"
+Content-Type: text/plain
+
+PANDA
+
+--WebApp
+Content-Disposition: form-data; name="file"; filename="panda.jpg"
+Content-Type: image/jpeg
+
+< ./java.jpg
+--WebApp--
+
+###
+
+POST {{url}}/api/files/bytes
+Content-Type: application/octet-stream
+
+< ./java.jpg
+
+###

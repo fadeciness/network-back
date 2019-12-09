@@ -1,0 +1,7 @@
+CREATE TABLE posts (
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    content TEXT NOT NULL,
+    media TEXT,
+    removed BOOLEAN DEFAULT FALSE,
+    likes INTEGER NOT NULL DEFAULT 0
+);
