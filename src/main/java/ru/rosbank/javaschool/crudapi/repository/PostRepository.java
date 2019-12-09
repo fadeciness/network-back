@@ -1,23 +1,17 @@
 package ru.rosbank.javaschool.crudapi.repository;
 
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import ru.rosbank.javaschool.crudapi.dto.PostSaveRequestDto;
 import ru.rosbank.javaschool.crudapi.model.PostModel;
 
 import javax.sql.DataSource;
-import javax.swing.text.html.Option;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.DoubleStream;
 
 @Repository
 public class PostRepository {
@@ -57,7 +51,11 @@ public class PostRepository {
           params,
           keyHolder
       );
-      int id = keyHolder.getKey().intValue();
+      Optional<Number> keyHolderOpt = Optional.of(keyHolder.getKey());
+      int id = 0;
+      if (keyHolderOpt.isPresent()) {
+        id = keyHolderOpt.get().intValue();
+      }
       model.setId(id);
       return Optional.of(model);
     }
@@ -106,7 +104,7 @@ public class PostRepository {
   }
 
   public void removeById(int id) {
-    int removed = template.update(
+    template.update(
         "UPDATE posts SET removed = TRUE WHERE id = :id",
         Map.of("id", id)
     );
